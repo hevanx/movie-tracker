@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #11111b;
+  color: #cdd6f4;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Shared component styles ──────────────────────────────────────────────── */
+/* Defined here so they can be reused without copy-pasting Tailwind strings   */
+@layer components {
+  /* Primary filled button */
+  .btn-primary {
+    @apply bg-violet-600 hover:bg-violet-500 active:bg-violet-700
+           text-white text-sm font-medium px-4 py-2 rounded-lg
+           transition-colors disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  /* Ghost / outline button */
+  .btn-ghost {
+    @apply bg-white/5 hover:bg-white/10 active:bg-white/15
+           text-gray-300 text-sm px-4 py-2 rounded-lg transition-colors;
+  }
+
+  /* Danger text button */
+  .btn-danger {
+    @apply text-red-400 text-xs hover:text-red-300 transition-colors;
+  }
+
+  /* Chip / pill filter button */
+  .chip {
+    @apply text-xs font-medium px-3 py-1.5 rounded-full border transition-colors cursor-pointer
+           select-none touch-manipulation;
+  }
+  .chip-active {
+    @apply bg-violet-600 border-violet-600 text-white;
+  }
+  .chip-inactive {
+    @apply bg-transparent border-white/10 text-gray-400
+           hover:border-white/30 hover:text-white;
+  }
+
+  /* Form input */
+  .input {
+    @apply bg-surface border border-white/10 rounded-lg px-4 py-2.5 text-sm
+           text-gray-200 placeholder-gray-500 outline-none w-full
+           focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition;
+  }
+}
+
+/* ── Custom scrollbar ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: #1e1e2e; }
+::-webkit-scrollbar-thumb  { background: #45475a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #585b70; }
+
+/* Poster images fade in as they load */
+img { transition: opacity 0.25s ease; }

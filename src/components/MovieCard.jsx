@@ -31,19 +31,6 @@ export default function MovieCard({
           onError={(e) => { e.target.src = FALLBACK_POSTER }}
         />
 
-        {/* Watched badge — bottom-left on the poster for better readability */}
-        {showListActions && (
-          <span
-            className={`absolute bottom-2 left-2 text-[10px] font-semibold
-                        px-2 py-0.5 rounded-full backdrop-blur-sm ${
-              movie.watched
-                ? 'bg-green-500/80 text-white'
-                : 'bg-black/60 text-gray-300 border border-white/10'
-            }`}
-          >
-            {movie.watched ? 'Watched' : 'Unwatched'}
-          </span>
-        )}
 
         {/* Hover overlay — "Edit" hint on MyList */}
         {showListActions && (
@@ -68,25 +55,44 @@ export default function MovieCard({
           <p className="text-xs text-gray-500 mt-0.5">{movie.year}</p>
         </div>
 
-        {/* Genre badges — accent-tinted so they read as tags, not plain text */}
-        {movie.genres?.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {movie.genres.slice(0, 2).map((g) => (
-              <span
-                key={g}
-                className="text-[10px] font-medium bg-violet-500/10 text-violet-300
-                           border border-violet-500/20 px-1.5 py-0.5 rounded"
-              >
-                {g}
-              </span>
-            ))}
-          </div>
-        )}
+        {/* ── Info block: genres + status + rating grouped together ── */}
+        <div className="border-t border-white/5 pt-2.5 flex flex-col gap-2">
 
-        {/* Saved rating (MyList only, only if rated) */}
-        {showListActions && movie.rating > 0 && (
-          <StarRating rating={movie.rating} readonly />
-        )}
+          {/* Genre chips — max 2 visible, overflow shown as +n badge */}
+          {movie.genres?.length > 0 && (
+            <div className="flex flex-wrap gap-1 items-center">
+              {movie.genres.slice(0, 2).map((g) => (
+                <span
+                  key={g}
+                  className="text-[10px] font-medium bg-violet-500/10 text-violet-300
+                             border border-violet-500/20 px-1.5 py-0.5 rounded"
+                >
+                  {g}
+                </span>
+              ))}
+              {movie.genres.length > 2 && (
+                <span className="text-[10px] text-gray-500">
+                  +{movie.genres.length - 2}
+                </span>
+              )}
+            </div>
+          )}
+
+          {/* Watch status + rating on one line (MyList only) */}
+          {showListActions && (
+            <div className="flex items-center justify-between">
+              <span className={`text-[10px] font-medium ${
+                movie.watched ? 'text-green-400' : 'text-gray-500'
+              }`}>
+                {movie.watched ? '✓ Watched' : 'Unwatched'}
+              </span>
+              {movie.rating > 0 && (
+                <StarRating rating={movie.rating} readonly />
+              )}
+            </div>
+          )}
+
+        </div>
 
         {/* ── Action buttons ── */}
         <div className="mt-auto pt-1 flex flex-col gap-1.5">

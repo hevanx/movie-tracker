@@ -58,43 +58,46 @@ export default function MyList({ savedMovies, onUpdate, onRemove }) {
     <div className="flex flex-col gap-5 pb-12">
 
       {/* ── Page header with stats ── */}
-      <div className="pt-6 pb-2 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">My List</h1>
-          {/* Stats row */}
-          <div className="flex items-center gap-3 mt-2">
+      <div className="pt-6 pb-2">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white">My List</h1>
+
+        {/* Stats + progress bar on one compact row */}
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center gap-3">
             <Stat value={savedMovies.length} label="saved" />
             <span className="text-gray-700">·</span>
             <Stat value={watchedCount} label="watched" accent={watchedCount > 0} />
             <span className="text-gray-700">·</span>
             <Stat value={ratedCount} label="rated" />
           </div>
-        </div>
 
-        {/* Watched progress bar */}
-        {savedMovies.length > 0 && (
-          <div className="sm:text-right">
-            <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">
-              Watch progress
-            </p>
-            <div className="w-full sm:w-32 h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-green-500 rounded-full transition-all duration-500"
-                style={{ width: `${(watchedCount / savedMovies.length) * 100}%` }}
-              />
+          {savedMovies.length > 0 && (
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] text-gray-500 hidden sm:inline">Progress</span>
+              <div className="w-20 sm:w-32 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-green-500 rounded-full transition-all duration-500"
+                  style={{ width: `${(watchedCount / savedMovies.length) * 100}%` }}
+                />
+              </div>
+              <span className="text-[10px] text-gray-500">
+                {Math.round((watchedCount / savedMovies.length) * 100)}%
+              </span>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
-      {/* ── Filters ── */}
-      <FilterBar
-        savedMovies={savedMovies}
-        statusFilter={statusFilter}
-        genreFilter={genreFilter}
-        onStatusChange={setStatusFilter}
-        onGenreChange={setGenreFilter}
-      />
+      {/* ── Filters — separated with a divider ── */}
+      <div className="border-t border-white/5 pt-4">
+        <FilterBar
+          savedMovies={savedMovies}
+          statusFilter={statusFilter}
+          genreFilter={genreFilter}
+          onStatusChange={setStatusFilter}
+          onGenreChange={setGenreFilter}
+        />
+      </div>
 
       {/* Result count when filters are active */}
       {filtersActive && filtered.length > 0 && (

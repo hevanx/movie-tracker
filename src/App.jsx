@@ -44,6 +44,8 @@ export default function App() {
   // Used by Browse to check if a search result is already in the list.
   const isSaved = (id) => savedMovies.some((m) => m.id === id)
 
+  const clearAll = () => setSavedMovies([])
+
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-base text-gray-200">
@@ -69,6 +71,7 @@ export default function App() {
                   savedMovies={savedMovies}
                   onUpdate={updateMovie}
                   onRemove={removeMovie}
+                  onClearAll={clearAll}
                 />
               }
             />

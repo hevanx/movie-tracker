@@ -4,7 +4,7 @@ import FilterBar from '../components/FilterBar'
 import MovieGrid from '../components/MovieGrid'
 import ReviewModal from '../components/ReviewModal'
 
-export default function MyList({ savedMovies, onUpdate, onRemove }) {
+export default function MyList({ savedMovies, onUpdate, onRemove, onClearAll }) {
   const [statusFilter, setStatusFilter] = useState('all')
   const [genreFilter, setGenreFilter]   = useState('')
   const [reviewTarget, setReviewTarget] = useState(null)
@@ -59,7 +59,17 @@ export default function MyList({ savedMovies, onUpdate, onRemove }) {
 
       {/* ── Page header with stats ── */}
       <div className="pt-6 pb-2">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">My List</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">My List</h1>
+          <button
+            onClick={() => {
+              if (window.confirm('Remove all movies from your list?')) onClearAll()
+            }}
+            className="text-xs text-red-400 hover:text-red-300 transition-colors"
+          >
+            Clear All
+          </button>
+        </div>
 
         {/* Stats + progress bar on one compact row */}
         <div className="flex items-center justify-between mt-2">

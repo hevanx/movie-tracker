@@ -4,6 +4,8 @@ A web app for browsing movies, saving favourites, tracking what you've watched, 
 
 **Live demo:** https://movie-tracker-nu-woad.vercel.app/
 
+![Movie Tracker preview](screenshots/preview.png)
+
 ---
 
 ## Technologies Used
